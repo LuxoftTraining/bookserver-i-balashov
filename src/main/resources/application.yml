@@ -1,0 +1,18 @@
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto: update
+
+spring.datasource.type: com.zaxxer.hikari.HikariDataSource
+spring.datasource.driver-class-name: org.postgresql.Driver
+spring.datasource.url: jdbc:postgresql://localhost:5432/library
+spring.datasource.username: postgres
+spring.datasource.password: changeme
+
+spring.jpa.show-sql: false
+
+
+book-service:
+  generate:
+    enabled: false
+    size: 100000
+server:
+  port: 8089
