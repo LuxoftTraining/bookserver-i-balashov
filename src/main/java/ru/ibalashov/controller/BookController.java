@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ibalashov.entity.Book;
+import ru.ibalashov.measure.Measure;
 import ru.ibalashov.service.BookService;
 
 import java.util.Arrays;
@@ -24,9 +25,17 @@ public class BookController {
         return bookService.count();
     }
 
-    @GetMapping(path = "/search")
-    public List<Book> search(@RequestParam(name = "by") String searchString) {
+    @Measure(value = "baseline", warmup = 500)
+    @GetMapping(path = "/search/like")
+    public List<Book> searchLike(@RequestParam(name = "by") String searchString) {
         List<String> words = Arrays.asList(searchString.split(" "));
         return bookService.findBooksByNameLike(words);
+    }
+
+    @Measure(value = "join", warmup = 500)
+    @GetMapping(path = "/search/join")
+    public List<Book> searchJoin(@RequestParam(name = "by") String searchString) {
+        List<String> words = Arrays.asList(searchString.split(" "));
+        return bookService.findBooksByNameJoin(words);
     }
 }
